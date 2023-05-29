@@ -9,18 +9,32 @@
     <title>Django Blogs</title>
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{% static 'css/blog.css' %}" rel="stylesheet">
   </head>
 <body>
     <div class="container">
       <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-8 pt-1">
+          <div class="col-4 pt-1">
             <a class="blog-header-logo text-dark" href="/">Django Blog</a>
           </div>
+          <div class="col-4">
+            <form action="{% url 'search_results' %}" class="form-inline"%}" method="get">
+              <div class="input-group">
+                <input class="form-control" type="text" name="keyword" value="{{ keyword }}" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                <button type="submit" class="btn btn-warning" id="button-search" type="button">Go!</button>
+            </div>
+            </form>
+          </div>
           <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="btn btn-sm btn-warning" href="#">Login</a> &nbsp;
-            <a class="btn btn-sm btn-outline-secondary" href="#">Register</a>
+            {% if not user.is_authenticated %}
+            <a class="btn btn-sm btn-warning" href="{% url 'login' %}">Login</a> &nbsp;
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Register</a>
+            {% else %}
+            <span><a class="btn btn-sm btn-warning"" href="{% url 'dashboard' %}">Dashboard</a></span>  &ensp;
+            <span><a class="btn btn-sm btn-danger" href="{% url 'logout' %}">Logout</a></span>
+            {% endif %}
           </div>
         </div>
       </header>
@@ -41,5 +55,5 @@
 {% endblock content %}
 <!-- Footer Part -->
 <footer class="blog-footer">
-  <p>Django blog built with � by <a href="#">Rathan Kumar</a></p>
+  <p>Django blog built with � by <a href="#"></a></p>
 </footer>

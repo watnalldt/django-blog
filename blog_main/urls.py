@@ -19,12 +19,20 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from blog import views as BlogView
+
 from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
     path("category/", include("blog.urls")),
+    path("search/", BlogView.search, name="search_results"),
+    path("blogs/<slug:slug>/", BlogView.posts, name="posts"),
+    path("register/", views.register, name="register"),
+    path("login/", views.login, name="login"),
+    path("logout/", views.logout, name="logout"),
+    path("dashboard/", include("dashboards.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
